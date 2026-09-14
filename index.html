@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALG Peinture — Artisan peintre à Angers | Peinture intérieure & façades</title>
+<meta name="description" content="ALG Peinture, artisan peintre en bâtiment à Angers (49). Peinture intérieure, revêtements muraux, boiseries, façades et ravalement. Finitions haut de gamme, devis gratuit au 07 68 78 92 58.">
+<meta name="theme-color" content="#1C1B21">
+<link rel="canonical" href="https://alg-peinture.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ALG Peinture — Artisan peintre à Angers">
+<meta property="og:description" content="Peinture intérieure, décoration murale et façades. Le soin du détail, la tenue dans le temps.">
+<meta property="og:image" content="https://alg-peinture.pages.dev/images/og-image.jpg">
+<meta name="geo.region" content="FR-49"><meta name="geo.placename" content="Angers">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HousePainter","name":"ALG Peinture","image":"https://alg-peinture.pages.dev/images/og-image.jpg","telephone":"+33768789258","email":"a.l.g-peinture@gmail.com","url":"https://alg-peinture.pages.dev/","founder":{"@type":"Person","name":"Gad"},"address":{"@type":"PostalAddress","addressLocality":"Angers","postalCode":"49000","addressRegion":"Maine-et-Loire","addressCountry":"FR"},"geo":{"@type":"GeoCoordinates","latitude":47.4784,"longitude":-0.5632},"areaServed":["Angers","Avrillé","Trélazé","Les Ponts-de-Cé","Saint-Barthélemy-d'Anjou","Beaucouzé","Bouchemaine","Saint-Sylvain-d'Anjou","Écouflant","Montreuil-Juigné","Mûrs-Érigné","Saint-Jean-de-Linières"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"12:00"}]}
+</script>
+<style>
+:root{
+  --ink:#1C1B21; --ink-2:#232229; --ink-3:#2C2B32;
+  --sand:#D9BF9D; --sand-2:#C6A67F; --taupe:#9C8F82;
+  --cream:#EFEAE3; --paper:#F7F4EF; --line:rgba(217,191,157,.22);
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);font-weight:300;color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{overflow-x:clip}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+.eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;font-weight:500;color:var(--sand-2);display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:36px;height:1px;background:currentColor}
+.dark .eyebrow{color:var(--sand)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.25rem);margin:18px 0 22px}
+h2 em,h1 em{font-style:italic;color:var(--sand-2)}
+.dark h2 em,.dark h1 em{color:var(--sand)}
+.lead{font-size:1.05rem;color:#55525A;max-width:600px}
+.dark{background:var(--ink);color:var(--cream)}
+.dark .lead{color:#B9B2AA}
+section{padding:clamp(80px,11vw,140px) 0;position:relative}
+
+.btn{display:inline-flex;align-items:center;gap:12px;padding:16px 30px;font-family:var(--sans);font-size:.78rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--sand);transition:all .4s var(--ease);cursor:pointer;min-height:52px}
+.btn-gold{background:var(--sand);color:var(--ink)}
+.btn-gold:hover{background:transparent;color:var(--sand)}
+.btn-line{color:var(--cream);background:transparent;border-color:rgba(239,234,227,.4)}
+.btn-line:hover{border-color:var(--sand);color:var(--sand)}
+.btn svg{width:16px;height:16px}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s var(--ease),padding .4s var(--ease),border-color .4s;padding:22px 0;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(28,27,33,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:12px 0;border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:14px;color:var(--sand)}
+.brand img{width:46px;height:46px;object-fit:contain}
+.brand-txt{display:flex;flex-direction:column;line-height:1}
+.brand-txt b{font-family:var(--serif);font-size:1.6rem;font-weight:700;letter-spacing:.01em}
+.brand-txt span{font-size:.6rem;letter-spacing:.42em;color:var(--taupe);margin-top:4px;font-weight:400}
+.menu{display:flex;gap:34px;list-style:none}
+.menu a{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);font-weight:400;position:relative;padding:6px 0}
+.menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--sand);transition:width .4s var(--ease)}
+.menu a:hover::after{width:100%}
+.nav-tel{font-size:.8rem;color:var(--sand);letter-spacing:.08em;font-weight:500;border:1px solid var(--line);padding:10px 18px;white-space:nowrap}
+.nav-tel:hover{border-color:var(--sand)}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:1px;background:var(--sand);transition:.3s}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:28px}
+.nav.open .burger span:nth-child(1){top:22px;transform:rotate(45deg)}
+.nav.open .burger span:nth-child(2){opacity:0}
+.nav.open .burger span:nth-child(3){top:22px;transform:rotate(-45deg)}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;align-items:flex-end;padding:140px 0 clamp(60px,9vh,110px);background:var(--ink);color:var(--cream);overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:kb 18s var(--ease) forwards;filter:saturate(.8)}
+@keyframes kb{to{transform:scale(1)}}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(28,27,33,.96) 0%,rgba(28,27,33,.82) 42%,rgba(28,27,33,.35) 100%),linear-gradient(0deg,rgba(28,27,33,.9),transparent 45%)}
+.arcs{position:absolute;pointer-events:none;color:var(--sand)}
+.hero .arcs{right:-160px;bottom:-260px;width:760px;opacity:.14}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(2.6rem,6.6vw,5.6rem);max-width:900px;margin:26px 0 28px;font-weight:600}
+.hero p{max-width:540px;font-size:1.08rem;color:#CFC8BF;margin-bottom:40px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:44px;margin-top:70px;padding-top:30px;border-top:1px solid var(--line);flex-wrap:wrap}
+.hero-meta div{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+.hero-meta b{display:block;font-family:var(--serif);font-size:2.2rem;letter-spacing:0;text-transform:none;color:var(--sand);font-weight:600;line-height:1.1;margin-bottom:4px}
+.scroll-hint{position:absolute;right:48px;bottom:60px;z-index:2;writing-mode:vertical-rl;font-size:.66rem;letter-spacing:.35em;text-transform:uppercase;color:var(--taupe);display:flex;align-items:center;gap:16px}
+.scroll-hint::after{content:"";width:1px;height:70px;background:linear-gradient(var(--sand),transparent);animation:drip 2.4s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* MAISON */
+.maison-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(40px,7vw,110px);align-items:center}
+.maison-visual{position:relative}
+.maison-visual .main{aspect-ratio:4/5;object-fit:cover;width:100%}
+.maison-visual .sub{position:absolute;width:44%;aspect-ratio:3/4;object-fit:cover;right:-8%;bottom:-10%;border:10px solid var(--paper)}
+.maison-visual .tag{position:absolute;left:-1px;top:40px;background:var(--ink);color:var(--sand);padding:22px 26px;font-family:var(--serif);font-size:1.05rem;font-style:italic;line-height:1.35}
+.maison-visual .tag small{display:block;font-family:var(--sans);font-style:normal;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);margin-top:8px}
+.sign{display:flex;align-items:center;gap:22px;margin-top:38px;padding-top:30px;border-top:1px solid #DDD5CA}
+.sign b{font-family:var(--serif);font-style:italic;font-size:2.4rem;color:var(--sand-2);font-weight:600;line-height:1}
+.sign span{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--taupe)}
+.values{display:grid;grid-template-columns:1fr 1fr;gap:26px 34px;margin-top:34px}
+.values div{padding-left:18px;border-left:1px solid var(--sand)}
+.values h4{font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.values p{font-size:.9rem;color:#6A665F;line-height:1.6}
+
+/* SERVICES */
+.services-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc{background:var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.svc-img{aspect-ratio:4/3;overflow:hidden;position:relative}
+.svc-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) brightness(.85);transition:transform 1.2s var(--ease),filter .8s}
+.svc:hover .svc-img img{transform:scale(1.07);filter:none}
+.svc-body{padding:34px 34px 40px;flex:1;display:flex;flex-direction:column}
+.svc-num{font-family:var(--serif);font-style:italic;color:var(--sand);font-size:1rem;margin-bottom:10px}
+.svc h3{font-size:1.5rem;color:var(--cream);margin-bottom:14px;font-weight:600}
+.svc p{font-size:.92rem;color:#A9A29A;line-height:1.7}
+.svc ul{list-style:none;margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.svc li{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sand);border:1px solid var(--line);padding:5px 10px}
+
+/* BANDEAU */
+.quote-band{position:relative;padding:clamp(70px,9vw,120px) 0;background:var(--cream);text-align:center;overflow:hidden}
+.quote-band blockquote{font-family:var(--serif);font-size:clamp(1.6rem,3.6vw,2.8rem);line-height:1.3;max-width:900px;margin:0 auto;font-weight:500}
+.quote-band blockquote em{color:var(--sand-2)}
+.quote-band cite{display:block;margin-top:26px;font-style:normal;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe)}
+.quote-band .arcs{left:50%;top:50%;width:900px;transform:translate(-50%,-30%);opacity:.12;color:var(--sand-2)}
+
+/* METHODE */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;counter-reset:s}
+.step{padding:34px 30px 10px 0;border-top:1px solid #D8CFC3;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);position:absolute;top:-1px;left:0;padding-top:24px;border-top:2px solid var(--sand-2);font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--sand-2);width:48px}
+.step h4{font-family:var(--serif);font-size:1.3rem;margin:30px 0 10px;font-weight:600}
+.step p{font-size:.9rem;color:#6A665F}
+
+/* GALERIE */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px}
+.g-item{aspect-ratio:3/4;position:relative;overflow:hidden;cursor:zoom-in;background:var(--ink-2)}
+.g-item.g-video{grid-row:span 2;aspect-ratio:auto}
+.g-item img,.g-item video{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease),opacity .6s}
+.g-item:hover img{transform:scale(1.05)}
+.g-item figcaption{position:absolute;inset:auto 0 0;padding:40px 22px 18px;background:linear-gradient(transparent,rgba(28,27,33,.85));color:var(--cream);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:.5s var(--ease)}
+.g-item:hover figcaption{opacity:1;transform:none}
+.g-video{cursor:pointer}
+.g-video .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(28,27,33,.25);transition:background .4s}
+.g-video .play span{width:84px;height:84px;border-radius:50%;border:1px solid var(--sand);display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(28,27,33,.4)}
+.g-video .play svg{width:22px;height:22px;fill:var(--sand);margin-left:4px}
+.g-video .badge{position:absolute;left:18px;top:18px;background:var(--sand);color:var(--ink);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;padding:6px 12px;font-weight:500}
+.g-video.playing .play{display:none}
+.g-video figcaption{opacity:1;transform:none}
+.lightbox{position:fixed;inset:0;background:rgba(18,17,22,.96);z-index:100;display:none;align-items:center;justify-content:center;padding:40px}
+.lightbox.on{display:flex}
+.lightbox img{max-height:88vh;max-width:92vw;object-fit:contain}
+.lb-btn{position:absolute;background:none;border:1px solid var(--line);color:var(--sand);width:52px;height:52px;cursor:pointer;font-size:1.3rem;font-family:var(--serif)}
+.lb-btn:hover{border-color:var(--sand)}
+.lb-close{top:24px;right:24px}.lb-prev{left:24px;top:50%}.lb-next{right:24px;top:50%}
+
+/* ZONE */
+.zone-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(40px,6vw,90px);align-items:center}
+.towns{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.towns span{font-size:.82rem;padding:8px 16px;border:1px solid var(--line);color:#CFC8BF}
+.towns span:first-child{background:var(--sand);color:var(--ink);border-color:var(--sand);font-weight:500}
+.map-frame{position:relative;aspect-ratio:1/1;border:1px solid var(--line);overflow:hidden}
+.map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.92) contrast(.9) sepia(.25)}
+
+/* DEVIS */
+.devis-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(40px,6vw,90px)}
+.contact-list{list-style:none;margin-top:40px}
+.contact-list li{display:grid;grid-template-columns:110px 1fr;padding:20px 0;border-bottom:1px solid #DDD5CA;align-items:baseline}
+.contact-list span{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);font-weight:500}
+.contact-list a,.contact-list p{font-size:1.02rem;color:var(--ink);font-weight:400;word-break:break-word}
+.contact-list a:hover{color:var(--sand-2)}
+form{background:var(--ink);color:var(--cream);padding:clamp(30px,5vw,56px);position:relative;overflow:hidden}
+form .arcs{right:-140px;top:-200px;width:420px;opacity:.1}
+form h3{font-size:1.9rem;margin-bottom:6px;position:relative}
+form > p{color:#A9A29A;font-size:.9rem;margin-bottom:30px;position:relative}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:relative}
+.field{display:flex;flex-direction:column;margin-bottom:18px}
+.field label{font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe);margin-bottom:8px;font-weight:500}
+.field input,.field select,.field textarea{font:400 16px var(--sans);color:var(--cream);background:transparent;border:0;border-bottom:1px solid rgba(217,191,157,.35);padding:10px 0;min-height:48px;border-radius:0;transition:border-color .3s;-webkit-appearance:none;appearance:none}
+.field select{background-image:linear-gradient(45deg,transparent 50%,var(--sand) 50%),linear-gradient(135deg,var(--sand) 50%,transparent 50%);background-position:calc(100% - 12px) 22px,calc(100% - 7px) 22px;background-size:5px 5px;background-repeat:no-repeat}
+.field select option{background:var(--ink)}
+.field textarea{resize:vertical;min-height:110px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--sand)}
+.field input::placeholder,.field textarea::placeholder{color:#6F6A66}
+form .btn{width:100%;justify-content:center;margin-top:10px}
+.form-note{font-size:.75rem;color:#7D7771;margin-top:16px;text-align:center}
+.form-ok{display:none;text-align:center;padding:40px 0}
+.form-ok h3{color:var(--sand)}
+
+/* FOOTER */
+footer{background:#151419;color:#8E877F;padding:80px 0 30px;font-size:.88rem;position:relative;overflow:hidden}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:50px;padding-bottom:60px;border-bottom:1px solid var(--line)}
+footer h5{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sand);margin-bottom:20px;font-weight:500}
+footer ul{list-style:none;display:grid;gap:10px}
+footer a:hover{color:var(--sand)}
+.foot-brand p{margin-top:22px;max-width:320px}
+.foot-bottom{display:flex;justify-content:space-between;gap:20px;padding-top:26px;font-size:.76rem;flex-wrap:wrap}
+
+/* FLOAT CALL */
+.float-call{position:fixed;right:20px;bottom:20px;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--sand);color:var(--ink);display:none;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .45s var(--ease)}
+.float-call svg{width:24px;height:24px}
+.float-call.hide{transform:translateY(120px)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-bg img{animation:none;transform:none}}
+
+@media (max-width:1024px){
+  .menu,.nav-tel{display:none}
+  .burger{display:block}
+  .nav.open{background:var(--ink)}
+  .nav.open .menu{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--ink);padding:20px 24px 34px;gap:4px;border-bottom:1px solid var(--line)}
+  .nav.open .menu a{display:block;padding:14px 0;font-size:.85rem;border-bottom:1px solid var(--line)}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:10px 30px}
+  .scroll-hint{display:none}
+}
+@media (max-width:800px){
+  .maison-grid,.zone-grid,.devis-grid{grid-template-columns:1fr}
+  .maison-visual{margin:0 8% 40px 0}
+  .services-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr 1fr;gap:12px}
+  .float-call{display:grid}
+  .map-frame{aspect-ratio:4/3}
+}
+@media (max-width:560px){
+  .wrap{width:calc(100% - 36px)}
+  .row,.values,.steps{grid-template-columns:1fr}
+  .hero-meta{gap:26px}
+  .hero-meta b{font-size:1.7rem}
+  .btn{padding:15px 22px}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .contact-list li{grid-template-columns:1fr;gap:4px}
+  .gallery{grid-template-columns:1fr}
+  .g-item.g-video{grid-row:auto;aspect-ratio:9/16}
+  .svc-body{padding:28px 24px 32px}
+  .brand-txt b{font-size:1.35rem}.brand img{width:40px;height:40px}
+  .lb-prev,.lb-next{top:auto;bottom:24px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="arcs" viewBox="0 0 400 210"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M10 10a190 190 0 0 0 380 0"/><path d="M50 10a150 150 0 0 0 300 0"/><path d="M90 10a110 110 0 0 0 220 0"/><path d="M130 10a70 70 0 0 0 140 0"/><path d="M0 10h400"/></g></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="ALG Peinture, accueil">
+      <img src="images/emblem.png" alt="" width="46" height="46">
+      <span class="brand-txt"><b>ALG</b><span>PEINTURE</span></span>
+    </a>
+    <ul class="menu" id="menu">
+      <li><a href="#maison">La maison</a></li>
+      <li><a href="#services">Savoir-faire</a></li>
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#zone">Secteur</a></li>
+      <li><a href="#devis">Devis</a></li>
+    </ul>
+    <a href="tel:+33768789258" class="nav-tel">07 68 78 92 58</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-bg"><img src="images/hero.jpg" alt="Artisan peintre au travail dans un appartement ancien" fetchpriority="high"></div>
+  <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true"><use href="#arcs"/></svg>
+  <div class="wrap">
+    <p class="eyebrow reveal">Artisan peintre · Angers</p>
+    <h1 class="reveal d1">La peinture, <em>pensée</em><br>comme une finition d'exception.</h1>
+    <p class="reveal d2">Intérieurs, boiseries, façades : ALG Peinture accompagne particuliers et professionnels de l'Anjou avec une exigence d'atelier — préparation minutieuse, matériaux choisis, rendu impeccable.</p>
+    <div class="hero-cta reveal d3">
+      <a href="#devis" class="btn btn-gold">Demander un devis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="#realisations" class="btn btn-line">Voir nos réalisations</a>
+    </div>
+    <div class="hero-meta reveal d3">
+      <div><b>10+</b>ans de métier</div>
+      <div><b>100%</b>chantiers soignés</div>
+      <div><b>48h</b>pour votre devis</div>
+    </div>
+  </div>
+  <div class="scroll-hint">Découvrir</div>
+</section>
+
+<section id="maison">
+  <div class="wrap maison-grid">
+    <div class="maison-visual reveal">
+      <img class="main" src="images/realisation-couloir-verriere.jpg" alt="Couloir peint en vert profond avec verrière bois, réalisation ALG Peinture" loading="lazy">
+      <img class="sub" src="images/realisation-cage-escalier.jpg" alt="Cage d'escalier en vert sauge" loading="lazy">
+      <div class="tag">« Chaque mur raconte<br>la maison. »<small>Atelier ALG · Angers</small></div>
+    </div>
+    <div class="reveal d1">
+      <p class="eyebrow">La maison ALG</p>
+      <h2>Un artisan, <em>une signature</em>, zéro compromis.</h2>
+      <p class="lead">Derrière ALG Peinture, il y a Gad, artisan peintre installé à Angers. Une entreprise à taille humaine où celui qui établit votre devis est aussi celui qui tient le pinceau. Ce choix garantit une chose : le niveau de finition promis est celui que vous obtenez.</p>
+      <div class="values">
+        <div><h4>Préparation</h4><p>Rebouchage, ponçage, sous-couche : 70 % du résultat se joue avant la première teinte.</p></div>
+        <div><h4>Matériaux</h4><p>Peintures professionnelles, lessivables et à faible émission de COV.</p></div>
+        <div><h4>Chantier propre</h4><p>Sols et mobilier protégés, pièces rendues nettes chaque soir.</p></div>
+        <div><h4>Conseil couleur</h4><p>Harmonies, finitions mates ou satinées, choix des teintes sur place.</p></div>
+      </div>
+      <div class="sign"><b>Gad</b><span>Gérant · Artisan peintre</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="dark">
+  <div class="wrap">
+    <div class="services-head">
+      <div class="reveal">
+        <p class="eyebrow">Savoir-faire</p>
+        <h2>Du plafond à la façade,<br><em>une même exigence.</em></h2>
+      </div>
+      <p class="lead reveal d1">Six expertises pour embellir, protéger et valoriser votre patrimoine, en neuf comme en rénovation.</p>
+    </div>
+    <div class="services-grid">
+      <article class="svc reveal">
+        <div class="svc-img"><img src="images/service-interieur.jpg" alt="Peinture intérieure au rouleau" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">01</span><h3>Peinture intérieure</h3><p>Murs, plafonds et pièces d'eau. Finitions mates profondes, velours ou satinées, appliquées sur supports parfaitement préparés.</p><ul><li>Murs</li><li>Plafonds</li><li>Salles de bain</li></ul></div>
+      </article>
+      <article class="svc reveal d1">
+        <div class="svc-img"><img src="images/service-revetements.jpg" alt="Pose de papier peint" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">02</span><h3>Revêtements muraux</h3><p>Papiers peints, panoramiques, toile de verre et enduits décoratifs pour donner du caractère à chaque pièce.</p><ul><li>Papier peint</li><li>Panoramique</li><li>Toile de verre</li></ul></div>
+      </article>
+      <article class="svc reveal d2">
+        <div class="svc-img"><img src="images/service-boiseries.jpg" alt="Laquage d'une menuiserie de fenêtre" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">03</span><h3>Boiseries & laques</h3><p>Portes, fenêtres, escaliers, poutres et moulures : décapage, ponçage et laquage pour des surfaces lisses et durables.</p><ul><li>Escaliers</li><li>Poutres</li><li>Menuiseries</li></ul></div>
+      </article>
+      <article class="svc reveal">
+        <div class="svc-img"><img src="images/service-exterieur.jpg" alt="Peinture de façade en pierre" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">04</span><h3>Peinture extérieure</h3><p>Façades, volets, portails et avancées de toit, avec des peintures microporeuses adaptées au climat ligérien.</p><ul><li>Façades</li><li>Volets</li><li>Ferronnerie</li></ul></div>
+      </article>
+      <article class="svc reveal d1">
+        <div class="svc-img"><img src="images/service-ravalement.jpg" alt="Application d'un enduit de façade" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">05</span><h3>Ravalement & enduits</h3><p>Traitement des fissures, reprise d'enduits et mise en peinture pour redonner éclat et étanchéité à votre façade.</p><ul><li>Fissures</li><li>Enduits</li><li>Imperméabilisation</li></ul></div>
+      </article>
+      <article class="svc reveal d2">
+        <div class="svc-img"><img src="images/service-nettoyage.jpg" alt="Nettoyage d'une façade en tuffeau" loading="lazy"></div>
+        <div class="svc-body"><span class="svc-num">06</span><h3>Nettoyage de façade</h3><p>Démoussage, traitement anti-mousse et hydrofuge, respectueux du tuffeau et des pierres de l'Anjou.</p><ul><li>Démoussage</li><li>Hydrofuge</li><li>Tuffeau</li></ul></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="quote-band">
+  <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true"><use href="#arcs"/></svg>
+  <div class="wrap reveal">
+    <blockquote>« Une belle peinture ne se remarque pas pour elle-même : <em>elle révèle simplement</em> la beauté d'un lieu. »</blockquote>
+    <cite>ALG Peinture</cite>
+  </div>
+</div>
+
+<section id="methode">
+  <div class="wrap">
+    <p class="eyebrow reveal">Notre méthode</p>
+    <h2 class="reveal d1">Un chantier <em>maîtrisé</em>, de la visite à la réception.</h2>
+    <div class="steps">
+      <div class="step reveal"><h4>Visite & écoute</h4><p>Rendez-vous sur place pour comprendre votre projet, relever les surfaces et diagnostiquer les supports.</p></div>
+      <div class="step reveal d1"><h4>Devis détaillé</h4><p>Un chiffrage clair, poste par poste, remis sous 48 heures. Aucun frais caché.</p></div>
+      <div class="step reveal d2"><h4>Réalisation</h4><p>Protection, préparation puis mise en peinture, dans le respect du planning convenu.</p></div>
+      <div class="step reveal d3"><h4>Réception</h4><p>Visite finale ensemble, retouches si besoin, et chantier rendu propre.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="realisations" class="dark">
+  <div class="wrap">
+    <div class="services-head" style="margin-bottom:0">
+      <div class="reveal">
+        <p class="eyebrow">Réalisations</p>
+        <h2>Nos chantiers, <em>en vrai.</em></h2>
+      </div>
+      <p class="lead reveal d1">Verts profonds, blancs lumineux, poutres éclaircies : quelques intérieurs rénovés par ALG Peinture en Anjou.</p>
+    </div>
+    <div class="gallery" id="gallery">
+      <figure class="g-item reveal"><img src="images/realisation-salon-poutres.jpg" alt="Salon avec plafond à poutres peint en blanc et mur vert" loading="lazy"><figcaption>Séjour · poutres & mur d'accent</figcaption></figure>
+      <figure class="g-item g-video reveal d1" id="videoTile">
+        <video src="videos/visite-chantier.mp4" poster="images/visite-poster.jpg" muted playsinline loop preload="none"></video>
+        <span class="badge">Vidéo</span>
+        <div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div>
+        <figcaption>Visite d'un logement rénové</figcaption>
+      </figure>
+      <figure class="g-item reveal d2"><img src="images/realisation-chambre-verriere.jpg" alt="Chambre avec mur vert et verrière" loading="lazy"><figcaption>Chambre · verrière</figcaption></figure>
+      <figure class="g-item reveal"><img src="images/realisation-entree-escalier.jpg" alt="Entrée avec escalier bois et murs sauge" loading="lazy"><figcaption>Entrée · escalier</figcaption></figure>
+      <figure class="g-item reveal d1"><img src="images/realisation-mezzanine-velux.jpg" alt="Pièce sous combles avec mur vert et placards blancs" loading="lazy"><figcaption>Combles · mezzanine</figcaption></figure>
+      <figure class="g-item reveal d2"><img src="images/realisation-sejour-vert-sauge.jpg" alt="Séjour au plafond de poutres blanches" loading="lazy"><figcaption>Séjour · vert sauge</figcaption></figure>
+      <figure class="g-item reveal d1"><img src="images/realisation-cage-escalier.jpg" alt="Cage d'escalier peinte" loading="lazy"><figcaption>Cage d'escalier</figcaption></figure>
+      <figure class="g-item reveal"><img src="images/realisation-sejour-cuisine.jpg" alt="Séjour ouvert sur la cuisine, poutres blanches et murs sauge" loading="lazy"><figcaption>Pièce de vie · poutres</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="zone" class="dark" style="background:var(--ink-2)">
+  <div class="wrap zone-grid">
+    <div class="reveal">
+      <p class="eyebrow">Secteur d'intervention</p>
+      <h2>Angers <em>et toute l'agglomération.</em></h2>
+      <p class="lead">Basé à Angers, ALG Peinture intervient dans un rayon d'environ 30 km, en Maine-et-Loire. Votre commune n'apparaît pas ? Appelez-nous, nous étudions chaque demande.</p>
+      <div class="towns">
+        <span>Angers</span><span>Avrillé</span><span>Trélazé</span><span>Les Ponts-de-Cé</span><span>Saint-Barthélemy-d'Anjou</span><span>Beaucouzé</span><span>Bouchemaine</span><span>Écouflant</span><span>Montreuil-Juigné</span><span>Mûrs-Érigné</span><span>Saint-Sylvain-d'Anjou</span><span>Saint-Jean-de-Linières</span>
+      </div>
+    </div>
+    <div class="map-frame reveal d1">
+      <iframe title="Carte du secteur d'intervention autour d'Angers" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Angers%2049000&z=11&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="devis">
+  <div class="wrap devis-grid">
+    <div class="reveal">
+      <p class="eyebrow">Devis gratuit</p>
+      <h2>Parlons de <em>votre projet.</em></h2>
+      <p class="lead">Décrivez-nous vos travaux : nous vous recontactons rapidement pour convenir d'une visite et vous remettre un devis détaillé sous 48 heures.</p>
+      <ul class="contact-list">
+        <li><span>Tél</span><a href="tel:+33768789258">07 68 78 92 58</a></li>
+        <li><span>Email</span><a href="mailto:a.l.g-peinture@gmail.com">a.l.g-peinture@gmail.com</a></li>
+        <li><span>Atelier</span><p>49000 Angers, France</p></li>
+        <li><span>Horaires</span><p>Lun – Ven · 8h – 18h30<br>Samedi · 9h – 12h</p></li>
+      </ul>
+    </div>
+    <div class="reveal d1">
+      <form id="devisForm" action="https://api.web3forms.com/submit" method="POST">
+        <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true"><use href="#arcs"/></svg>
+        <div id="formFields">
+          <h3>Demande de devis</h3>
+          <p>Réponse sous 48 h · sans engagement</p>
+          <input type="hidden" name="access_key" value="a6ffc352-1b91-4975-989e-b4e37e807f78">
+          <input type="hidden" name="subject" value="Nouvelle demande de devis — ALG Peinture">
+          <input type="hidden" name="from_name" value="Site ALG Peinture">
+          <input type="checkbox" name="botcheck" style="display:none">
+          <div class="row">
+            <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="Nom" required autocomplete="name" placeholder="Votre nom"></div>
+            <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="Téléphone" type="tel" required autocomplete="tel" placeholder="06 00 00 00 00"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="f-mail">Email</label><input id="f-mail" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr"></div>
+            <div class="field"><label for="f-ville">Commune</label><input id="f-ville" name="Commune" autocomplete="address-level2" placeholder="Angers"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="f-presta">Prestation</label>
+              <select id="f-presta" name="Prestation" required>
+                <option value="">Choisir…</option>
+                <option>Peinture intérieure</option><option>Revêtements muraux</option><option>Boiseries & laques</option><option>Peinture extérieure</option><option>Ravalement & enduits</option><option>Nettoyage de façade</option><option>Autre / plusieurs</option>
+              </select>
+            </div>
+            <div class="field"><label for="f-delai">Délai souhaité</label>
+              <select id="f-delai" name="Délai"><option>Dès que possible</option><option>Dans 1 à 3 mois</option><option>Plus tard</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="f-msg">Votre projet</label><textarea id="f-msg" name="Message" placeholder="Pièces concernées, surface approximative, état actuel…"></textarea></div>
+          <button type="submit" class="btn btn-gold">Envoyer ma demande</button>
+          <p class="form-note">Vos informations servent uniquement à vous recontacter.</p>
+        </div>
+        <div class="form-ok" id="formOk"><h3>Merci !</h3><p>Votre demande est bien arrivée. Gad vous rappelle très vite.</p></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true" style="right:-120px;bottom:-180px;width:520px;opacity:.06;color:var(--sand)"><use href="#arcs"/></svg>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><img src="images/emblem.png" alt="" width="46" height="46"><span class="brand-txt"><b>ALG</b><span>PEINTURE</span></span></a>
+        <p>Artisan peintre en bâtiment à Angers. Peinture intérieure, décoration murale et façades en Maine-et-Loire.</p>
+      </div>
+      <div>
+        <h5>Savoir-faire</h5>
+        <ul><li><a href="#services">Peinture intérieure</a></li><li><a href="#services">Revêtements muraux</a></li><li><a href="#services">Boiseries & laques</a></li><li><a href="#services">Peinture extérieure</a></li><li><a href="#services">Ravalement & nettoyage</a></li></ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul><li><a href="tel:+33768789258">07 68 78 92 58</a></li><li><a href="mailto:a.l.g-peinture@gmail.com">a.l.g-peinture@gmail.com</a></li><li>49000 Angers, France</li><li><a href="#devis">Demander un devis</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="yr">2026</span> ALG Peinture · Artisan peintre · Angers</span><span>Tous droits réservés</span></div>
+  </div>
+</footer>
+
+<a href="tel:+33768789258" class="float-call" id="floatCall" aria-label="Appeler ALG Peinture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo en grand">
+  <button class="lb-btn lb-close" aria-label="Fermer">✕</button>
+  <button class="lb-btn lb-prev" aria-label="Précédente">‹</button>
+  <img alt="">
+  <button class="lb-btn lb-next" aria-label="Suivante">›</button>
+</div>
+
+<script>
+(function(){
+  var nav=document.getElementById('nav'),burger=document.getElementById('burger');
+  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>40)}
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  burger.addEventListener('click',function(){var o=nav.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+  document.querySelectorAll('#menu a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');burger.setAttribute('aria-expanded','false')})});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  // Vidéo
+  var tile=document.getElementById('videoTile'),vid=tile.querySelector('video');
+  tile.addEventListener('click',function(){
+    if(vid.paused){vid.play();tile.classList.add('playing')}else{vid.pause();tile.classList.remove('playing')}
+  });
+
+  // Lightbox
+  var imgs=[].slice.call(document.querySelectorAll('#gallery .g-item:not(.g-video) img')),lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img'),cur=0;
+  function show(i){cur=(i+imgs.length)%imgs.length;lbImg.src=imgs[cur].src;lbImg.alt=imgs[cur].alt}
+  imgs.forEach(function(im,i){im.parentNode.addEventListener('click',function(){show(i);lb.classList.add('on');document.body.style.overflow='hidden'})});
+  function close(){lb.classList.remove('on');document.body.style.overflow=''}
+  lb.querySelector('.lb-close').onclick=close;
+  lb.querySelector('.lb-prev').onclick=function(e){e.stopPropagation();show(cur-1)};
+  lb.querySelector('.lb-next').onclick=function(e){e.stopPropagation();show(cur+1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1)});
+
+  // Pastille d'appel masquée sur le formulaire
+  var fc=document.getElementById('floatCall');
+  new IntersectionObserver(function(es){fc.classList.toggle('hide',es[0].isIntersecting)},{threshold:.05}).observe(document.getElementById('devis'));
+
+  // Formulaire
+  var form=document.getElementById('devisForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Envoi…';
+    fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
+      .then(function(r){return r.json()})
+      .then(function(d){if(d.success){document.getElementById('formFields').style.display='none';document.getElementById('formOk').style.display='block'}else{throw 0}})
+      .catch(function(){btn.disabled=false;btn.textContent='Envoyer ma demande';alert("L'envoi a échoué. Appelez-nous au 07 68 78 92 58.")});
+  });
+})();
+</script>
+</body>
+</html>
