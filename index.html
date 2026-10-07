@@ -21,6 +21,8 @@
 {"@context":"https://schema.org","@type":"HousePainter","name":"ALG Peinture","image":"https://alg-peinture.pages.dev/images/og-image.jpg","telephone":"+33768789258","email":"a.l.g-peinture@gmail.com","url":"https://alg-peinture.pages.dev/","founder":{"@type":"Person","name":"Gad"},"address":{"@type":"PostalAddress","addressLocality":"Saint-Pierre-Montlimart","postalCode":"49110","addressRegion":"Maine-et-Loire","addressCountry":"FR"},"geo":{"@type":"GeoCoordinates","latitude": 47.2681,"longitude": -1.0264},"areaServed":[{"@type":"AdministrativeArea","name":"Pays de la Loire"},{"@type":"AdministrativeArea","name":"Bretagne"},{"@type":"AdministrativeArea","name":"Nouvelle-Aquitaine"},{"@type":"AdministrativeArea","name":"Centre-Val de Loire"},{"@type":"AdministrativeArea","name":"Normandie"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"12:00"}]}
 </script>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -49,7 +51,7 @@
 <main id="top">
 
 <section class="hero">
-  <div class="hero-bg"><img src="images/hero.jpg?v=2" alt="Artisan peintre au travail sur une façade en pierre" fetchpriority="high"></div>
+  <div class="hero-bg"><img src="images/hero.jpg?v=3" alt="Artisan peintre au travail sur une façade en pierre" fetchpriority="high"></div>
   <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true"><use href="#arcs"/></svg>
   <div class="wrap">
     <p class="eyebrow reveal">Artisan peintre · Saint-Pierre-Montlimart &amp; Grand Ouest</p>
@@ -184,12 +186,12 @@
       <h2>Basé à Saint-Pierre-Montlimart, <em>dans tout le Grand Ouest.</em></h2>
       <p class="lead">Le siège d'ALG Peinture est à Saint-Pierre-Montlimart, dans les Mauges, mais nos chantiers ne s'arrêtent pas au Maine-et-Loire : nous nous déplaçons dans tout le Grand Ouest — et plus loin sur demande — pour les particuliers comme pour les professionnels. Maison de famille, appartement, résidence secondaire ou local commercial, dites-nous où se trouve votre projet.</p>
       <div class="towns">
-        <span>Saint-Pierre-Montlimart · siège</span><span>Cholet</span><span>Nantes</span><span>Angers</span><span>Ancenis</span><span>Beaupréau-en-Mauges</span><span>Clisson</span><span>La Roche-sur-Yon</span><span>Saumur</span><span>Rennes</span><span>Côte atlantique</span><span>Plus loin sur demande</span>
+        <span>Saint-Pierre-Montlimart · siège</span><span>Cholet</span><span>Nantes</span><span>Angers</span><span>Ancenis</span><span>Beaupréau-en-Mauges</span><span>Clisson</span><span>La Roche-sur-Yon</span><span>Saumur</span><span>Rennes</span><span>Côte atlantique</span>
       </div>
-      <p class="france-badge"><i></i>Grand Ouest · plus loin sur demande</p>
+      <div class="further"><b>Votre chantier est plus loin ?</b><p>Au-delà du Grand Ouest, nous nous déplaçons <strong>sur demande</strong> : maison de famille, résidence secondaire ou local professionnel. Parlons-en, le devis reste gratuit.</p><div class="f-row"><a href="#devis" class="btn btn-gold">Demander un devis</a><a href="tel:+33768789258" class="f-tel">07 68 78 92 58</a></div></div>
     </div>
     <div class="map-frame reveal d1">
-      <iframe title="Carte du Grand Ouest, secteur d'intervention d'ALG Peinture" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Saint-Pierre-Montlimart&z=7&output=embed"></iframe>
+      <div id="zoneMap" role="img" aria-label="Carte de la zone d'intervention d'ALG Peinture : Saint-Pierre-Montlimart et le Grand Ouest"></div><div class="map-legend"><span class="lg-3"><i></i>Siège · Saint-Pierre-Montlimart</span><span class="lg-1"><i></i>Zone principale · 50 km</span><span class="lg-2"><i></i>Grand Ouest</span></div>
     </div>
   </div>
 </section>
@@ -280,5 +282,20 @@
 </div>
 
 <script src="assets/main.js" defer></script>
+
+
+<script>
+(function(){var el=document.getElementById('zoneMap');if(!el)return;
+function go(){if(typeof L==='undefined'){return setTimeout(go,200)}
+var m=L.map(el,{scrollWheelZoom:false,zoomControl:true,attributionControl:true}).setView([47.35,-1.15],7);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'Fond &copy; Esri',maxZoom:12}).addTo(m);
+var zone=L.polygon([[48.75, -4.85], [48.85, -3.6], [48.72, -2.3], [48.65, -1.55], [49.05, -1.6], [49.35, -1.2], [49.3, -0.25], [48.95, 0.35], [48.45, 0.95], [47.95, 1.2], [47.4, 1.1], [46.95, 0.75], [46.5, 0.55], [46.15, -0.3], [45.95, -1.05], [46.15, -1.45], [46.45, -1.85], [46.85, -2.2], [47.15, -2.25], [47.3, -2.6], [47.5, -3.1], [47.7, -3.6], [47.8, -4.35], [47.95, -4.6], [48.3, -4.75]],{color:'#C6A67F',weight:1.5,dashArray:'6 6',fillColor:'#D9BF9D',fillOpacity:.13,smoothFactor:2}).addTo(m);
+L.circle([47.2681,-1.0264],{radius:50000,color:'#D9BF9D',weight:1.5,fillColor:'#D9BF9D',fillOpacity:.38}).addTo(m);
+[['Nantes', 47.218, -1.553, 'left'], ['Angers', 47.478, -0.563, 'right'], ['Cholet', 47.06, -0.879, 'right'], ['Rennes', 48.117, -1.677, 'right'], ['La Roche-sur-Yon', 46.67, -1.426, 'left'], ['Le Mans', 48.0, 0.2, 'right'], ['Vannes', 47.658, -2.76, 'left'], ['Niort', 46.323, -0.464, 'right'], ['Tours', 47.394, 0.684, 'right'], ['Brest', 48.39, -4.486, 'right'], ['Caen', 49.18, -0.37, 'left']].forEach(function(v){L.circleMarker([v[1],v[2]],{radius:3,color:'#E9E2D8',weight:1,fillColor:'#E9E2D8',fillOpacity:.9}).addTo(m).bindTooltip(v[0],{permanent:true,direction:v[3],className:'zone-label',offset:[v[3]=='left'?-4:4,0]})});
+L.circleMarker([47.2681,-1.0264],{radius:7,color:'#1C1B21',weight:2,fillColor:'#D9BF9D',fillOpacity:1}).addTo(m).bindTooltip('Siège · Saint-Pierre-Montlimart',{permanent:true,direction:'bottom',className:'zone-label siege',offset:[0,10]});
+m.fitBounds(zone.getBounds(),{padding:[18,18]});}
+if('IntersectionObserver' in window){var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){o.disconnect();go()}},{rootMargin:'300px'});o.observe(el)}else go();
+})();
+</script>
 </body>
 </html>

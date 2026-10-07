@@ -57,7 +57,7 @@ section{padding:clamp(80px,11vw,140px) 0;position:relative}
 /* HERO */
 .hero{min-height:100svh;display:flex;align-items:flex-end;padding:140px 0 clamp(60px,9vh,110px);background:var(--ink);color:var(--cream);overflow:hidden}
 .hero-bg{position:absolute;inset:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:kb 18s var(--ease) forwards;filter:saturate(.8)}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:68% center;object-position:68% center;object-position:68% center;transform:scale(1.08);animation:kb 18s var(--ease) forwards;filter:saturate(.8)}
 @keyframes kb{to{transform:scale(1)}}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(28,27,33,.96) 0%,rgba(28,27,33,.82) 42%,rgba(28,27,33,.35) 100%),linear-gradient(0deg,rgba(28,27,33,.9),transparent 45%)}
 .arcs{position:absolute;pointer-events:none;color:var(--sand)}
@@ -289,3 +289,25 @@ footer a:hover{color:var(--sand)}
   .others{grid-template-columns:1fr 1fr}
   .split img{aspect-ratio:4/3}
 }
+
+/* ── Zone de chalandise Grand Ouest + encart « plus loin sur demande » (07/10/2026) ── */
+.map-frame #zoneMap{position:absolute;inset:0;background:#1a1a1f}
+.map-frame .leaflet-container{font-family:var(--sans);background:#1a1a1f}
+.map-legend{position:absolute;left:14px;bottom:24px;z-index:500;background:rgba(28,27,33,.88);border:1px solid var(--line);padding:12px 14px;font-size:.74rem;line-height:1.9;color:#E9E2D8;backdrop-filter:blur(4px)}
+.map-legend span{display:flex;align-items:center;gap:9px}
+.map-legend i{width:14px;height:14px;display:inline-block;border-radius:3px}
+.map-legend .lg-1 i{background:rgba(217,191,157,.55);border:1px solid #D9BF9D}
+.map-legend .lg-2 i{background:rgba(217,191,157,.14);border:1px dashed #C6A67F}
+.map-legend .lg-3 i{border-radius:50%;background:#D9BF9D;box-shadow:0 0 0 4px rgba(217,191,157,.25)}
+.leaflet-tooltip.zone-label{background:none;border:0;box-shadow:none;padding:0 2px;color:#E9E2D8;font-size:.72rem;letter-spacing:.06em;font-weight:500;text-shadow:0 1px 3px #000}
+.leaflet-tooltip.zone-label.siege{color:#1C1B21;background:#D9BF9D;padding:3px 8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.62rem;text-shadow:none}
+.leaflet-tooltip.zone-label::before{display:none}
+.further{margin-top:28px;padding:22px 24px;border:1px solid var(--sand);background:linear-gradient(135deg,rgba(217,191,157,.16),rgba(217,191,157,.04));position:relative}
+.further::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:4px;background:var(--sand)}
+.further b{display:block;font-family:var(--serif);font-weight:500;font-size:1.35rem;color:var(--sand);margin-bottom:6px}
+.further p{font-size:.92rem;line-height:1.7;color:#CFC8BF;margin:0 0 16px}
+.further .f-row{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.further .f-tel{color:var(--sand);font-weight:500;letter-spacing:.06em;border-bottom:1px solid rgba(217,191,157,.5)}
+.further.light{background:linear-gradient(135deg,rgba(198,166,127,.18),rgba(198,166,127,.05));border-color:var(--sand-2)}
+.further.light::before{background:var(--sand-2)}
+.further.light b{color:var(--ink)}.further.light p{color:#5f5a54}.further.light .f-tel{color:var(--ink);border-color:var(--sand-2)}
