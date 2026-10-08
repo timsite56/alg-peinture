@@ -199,6 +199,9 @@ function wire(n) {
     const a = e.target.closest('a'); if (a) e.preventDefault();          // pas de navigation dans l'aperçu
   }, true);
   d.addEventListener('submit', e => e.preventDefault(), true);
+  // sélecteur de fichier DANS l'aperçu : le clic de l'utilisateur y est, le navigateur l'autorise
+  const fi = d.createElement('input'); fi.type = 'file'; fi.accept = 'image/*'; fi.style.cssText = 'position:fixed;left:-9999px;opacity:0';
+  d.body.appendChild(fi); cur.fi = fi;
   const badges = [];
   const covered = img => { const w = d.defaultView; const s = w.getComputedStyle(img), ps = img.parentElement ? w.getComputedStyle(img.parentElement) : s;
     return s.position === 'absolute' || s.position === 'fixed' || ps.position === 'absolute' || !!img.closest('[class*="hero"],[class*="bg"],[class*="banner"]'); };
@@ -218,7 +221,7 @@ function dirty() { if (!cur.dirty) { cur.dirty = true; $('#saveBtn').disabled = 
 
 /* ── Remplacement d'une photo ── */
 function pickImage(img, isBg) {
-  const f = $('#file'); f.value = '';
+  const f = cur.fi || $('#file'); f.value = '';
   f.onchange = async () => {
     const file = f.files[0]; if (!file) return;
     status('Préparation de la photo…');
