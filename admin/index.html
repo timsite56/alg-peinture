@@ -208,7 +208,8 @@ function wire(n) {
     bt.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); b.fn(); }, true); d.body.appendChild(bt); b.bt = bt; });
   const place = () => badges.forEach(b => { const r = b.el.getBoundingClientRect(); const w = d.defaultView;
     if (r.width < 60 || r.height < 40) { b.bt.style.display = 'none'; return; } b.bt.style.display = '';
-    b.bt.style.left = (r.left + w.scrollX + 16) + 'px'; b.bt.style.top = (r.top + w.scrollY + Math.max(16, Math.min(110, r.height * .18))) + 'px'; });
+    const vw = d.documentElement.clientWidth; const L = Math.min(Math.max(r.left, 0) + 16, Math.max(16, Math.min(r.right, vw) - 260));
+    b.bt.style.left = (L + w.scrollX) + 'px'; b.bt.style.top = (Math.max(r.top, 0) + w.scrollY + Math.max(16, Math.min(110, r.height * .18))) + 'px'; });
   place(); [400, 1200, 2500, 5000].forEach(t => setTimeout(place, t)); d.defaultView.addEventListener('resize', place);
   $('#loader').style.display = 'none';
   status(`${n.ce} textes et ${n.ci} photos modifiables`);
