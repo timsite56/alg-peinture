@@ -312,17 +312,19 @@ footer a:hover{color:var(--sand)}
 .fr-map .d-core{fill:rgba(217,191,157,.62);stroke:#E9D6BA}
 .fr-map .d-core:hover{fill:rgba(217,191,157,.75)}
 .fr-map .cities circle{fill:#F3ECE2}
-.fr-map .cities text{font-size:24px;font-weight:500;fill:#E9E2D8;letter-spacing:.02em;paint-order:stroke;stroke:#1C1B21;stroke-width:6px;stroke-linejoin:round}
-.fr-map .cities .far circle{fill:#8f877d}.fr-map .cities .far text{fill:#8f877d;font-size:21px}
-.fr-map .far-txt{font-family:var(--serif);font-size:44px;fill:rgba(217,191,157,.55)}
+.fr-map .cities text{font-size:23px;font-weight:500;fill:#F3ECE2;letter-spacing:.01em;filter:url(#tsh)}
+.fr-map .cities .far circle{fill:#9a9288}.fr-map .cities .far text{fill:#a59d92;font-size:20px}
+.fr-map .far-tag rect{fill:#1C1B21;stroke:rgba(217,191,157,.55);stroke-width:1.5}
+.fr-map .far-tag text{font-family:var(--serif);font-size:31px;fill:#D9BF9D;letter-spacing:.01em}
 .fr-map .siege{fill:#D9BF9D;stroke:#1C1B21;stroke-width:3}
 .fr-map .pulse{fill:none;stroke:#D9BF9D;stroke-width:2;transform-origin:center;transform-box:fill-box;animation:frpulse 2.6s ease-out infinite}
 @keyframes frpulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
 .fr-map .siege-tag rect{fill:#D9BF9D}
-.fr-map .siege-tag text{font-size:16px;font-weight:600;letter-spacing:.08em;fill:#1C1B21}
-.fr-legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;font-size:.78rem;color:#CFC8BF;letter-spacing:.04em}
+.fr-map .siege-tag text{font-size:12.5px;font-weight:700;letter-spacing:.2em;fill:#1C1B21}
+.fr-legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;padding-left:6px;font-size:.78rem;color:#CFC8BF;letter-spacing:.04em}
 .fr-legend span{display:inline-flex;align-items:center;gap:9px}
 .fr-legend i{width:16px;height:12px;border-radius:2px;display:inline-block}
+.fr-legend .l0 i{width:12px;height:12px;border-radius:50%;background:#D9BF9D;box-shadow:0 0 0 4px rgba(217,191,157,.22)}
 .fr-legend .l1 i{background:rgba(217,191,157,.62);border:1px solid #E9D6BA}
 .fr-legend .l2 i{background:rgba(217,191,157,.24);border:1px solid rgba(217,191,157,.55)}
 .fr-legend .l3 i{background:#2A2930;border:1px solid rgba(233,226,216,.25)}
