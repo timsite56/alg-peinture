@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Espace administrateur — modifier mon site</title>
+<style>
+  :root{--bg:#141418;--panel:#1d1d23;--line:#2e2e36;--text:#ECE7DF;--muted:#9a948b;--acc:#D9BF9D;--ok:#58c27d;--err:#e5675b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px}
+  button,select,input{font:inherit}
+  .btn{background:var(--acc);color:#141418;border:0;padding:11px 18px;border-radius:8px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  /* connexion */
+  #login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+  #login form{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px}
+  #login h1{font-size:1.3rem;margin-bottom:6px}
+  #login p{color:var(--muted);font-size:.9rem;margin-bottom:20px;line-height:1.5}
+  #login input{width:100%;padding:13px 14px;border-radius:8px;border:1px solid var(--line);background:#111115;color:var(--text);font-size:16px;margin-bottom:14px}
+  #login .btn{width:100%}
+  #loginErr{color:var(--err);font-size:.88rem;margin-top:10px;min-height:1.2em}
+  /* éditeur */
+  #app{display:none;height:100%;flex-direction:column}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--line)}
+  header .brand{font-weight:700;margin-right:6px}
+  header select{background:#111115;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:220px;max-width:100%}
+  header .sp{flex:1}
+  #status{font-size:.86rem;color:var(--muted)}
+  #status.ok{color:var(--ok)} #status.err{color:var(--err)} #status.dirty{color:var(--acc)}
+  .hint{padding:8px 14px;font-size:.84rem;color:var(--muted);background:#18181d;border-bottom:1px solid var(--line)}
+  .hint b{color:var(--text)}
+  #frameWrap{flex:1;position:relative;background:#0e0e11}
+  #frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+  #loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#0e0e11;z-index:2}
+  #file{display:none}
+  @media (max-width:640px){header select{min-width:0;flex:1 1 100%}header .sp{display:none}.btn{padding:10px 14px}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <form id="loginForm">
+    <h1>Espace administrateur</h1>
+    <p>Modifiez les textes et les photos de toutes les pages de votre site, puis publiez en un clic.</p>
+    <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password" required>
+    <button class="btn" type="submit">Se connecter</button>
+    <div id="loginErr"></div>
+  </form>
+</div>
+
+<div id="app">
+  <header>
+    <span class="brand" id="brand">Mon site</span>
+    <select id="pages" aria-label="Page à modifier"></select>
+    <span class="sp"></span>
+    <span id="status">Prêt</span>
+    <button class="btn ghost" id="viewBtn" type="button">Voir la page</button>
+    <button class="btn" id="saveBtn" type="button" disabled>Publier les modifications</button>
+  </header>
+  <div class="hint"><b>Texte :</b> cliquez dessus et tapez. <b>Photo :</b> cliquez dessus pour la remplacer. Puis <b>Publier</b> : la page est en ligne en 1 à 2 minutes.</div>
+  <div id="frameWrap"><div id="loader">Chargement…</div><iframe id="frame" title="Aperçu modifiable de la page"></iframe></div>
+  <input type="file" id="file" accept="image/*">
+</div>
+
+<script>
+/* Éditeur visuel multipage — modifie le HTML de chaque page directement dans le dépôt GitHub, via le Worker artisan-cmsa.
+   Réglages propres au site : */
+const CONFIG = {
+  clientId:  'alg-peinture',
+  workerUrl: 'https://artisan-cmsa.autosys-agency.workers.dev',
+  branch:    'main',
+  siteName:  'ALG Peinture',
+  skipIndex: false            // true sur les sites CMS : l'accueil se modifie dans l'admin principal (content.json)
+};
+
+let PWD = sessionStorage.getItem('ve_pwd') || '';
+let cur = null;          // { file, sha, src (Document source), dirty, images: Map(idx -> {blob, ext, name}) }
+const $ = s => document.querySelector(s);
+const frame = $('#frame');
+
+/* ── API GitHub via le Worker ── */
+async function api(path, opts = {}) {
+  const r = await fetch(`${CONFIG.workerUrl}/api/github/${CONFIG.clientId}/${path}`, {
+    ...opts, headers: { Authorization: `Bearer ${PWD}`, 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error(j.message || j.error || ('Erreur ' + r.status)); e.status = r.status; throw e; }
+  return j;
+}
+const b64eText = s => { const b = new TextEncoder().encode(s); let x = ''; for (let i = 0; i < b.length; i += 0x8000) x += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(x); };
+const b64dText = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, '')), c => c.charCodeAt(0)));
+const blobToB64 = blob => new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result.split(',')[1]); fr.readAsDataURL(blob); });
+function status(t, cls) { const s = $('#status'); s.textContent = t; s.className = cls || ''; }
+
+/* ── Connexion ── */
+$('#loginForm').addEventListener('submit', async e => {
+  e.preventDefault(); PWD = $('#pwd').value.trim(); $('#loginErr').textContent = '';
+  try { await start(); sessionStorage.setItem('ve_pwd', PWD); }
+  catch (err) { $('#loginErr').textContent = err.status === 401 ? 'Mot de passe incorrect.' : ('Connexion impossible : ' + err.message); }
+});
+if (PWD) start().catch(() => { sessionStorage.removeItem('ve_pwd'); PWD = ''; });
+
+async function start() {
+  const pages = await listPages();          // vérifie aussi le mot de passe
+  $('#login').style.display = 'none'; $('#app').style.display = 'flex';
+  $('#brand').textContent = CONFIG.siteName;
+  const sel = $('#pages'); sel.innerHTML = '';
+  pages.forEach(p => { const o = document.createElement('option'); o.value = p.file; o.textContent = p.label; sel.appendChild(o); });
+  sel.onchange = () => { if (cur && cur.dirty && !confirm('Des modifications ne sont pas publiées. Changer de page quand même ?')) { sel.value = cur.file; return; } loadPage(sel.value); };
+  await loadPage(sel.value);
+}
+
+/* Pages = sitemap.xml (adresse sans .html -> fichier .html) */
+async function listPages() {
+  let files = [];
+  try {
+    const sm = b64dText((await api('sitemap.xml')).content);
+    files = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => {
+      let p = new URL(m[1]).pathname.replace(/^\//, '');
+      if (!p || p.endsWith('/')) p += 'index.html'; else if (!/\.html?$/.test(p)) p += '.html';
+      return decodeURIComponent(p);
+    });
+  } catch (e) { if (e.status === 401) throw e; }
+  if (!files.includes('index.html')) files.unshift('index.html');
+  if (CONFIG.skipIndex) files = files.filter(f => f !== 'index.html');
+  await api(files[0]);                      // contrôle d'accès
+  return [...new Set(files)].map(f => ({ file: f, label: label(f) }));
+}
+function label(f) {
+  if (f === 'index.html') return 'Accueil';
+  const s = f.replace(/\.html?$/, '').replace(/-/g, ' ');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/* ── Repérage des zones modifiables ── */
+const SKIP = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'SVG', 'IFRAME', 'SELECT', 'OPTION', 'TEXTAREA', 'INPUT', 'BUTTON', 'VIDEO', 'AUDIO', 'CANVAS', 'TEMPLATE', 'HEAD']);
+const BLOCK = new Set(['DIV', 'P', 'UL', 'OL', 'LI', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'NAV', 'MAIN', 'ASIDE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'TABLE', 'FORM', 'FIGURE', 'DETAILS', 'DL', 'BLOCKQUOTE']);
+const HEAVY = 'img,svg,picture,video,iframe,input,select,textarea,button,form,canvas';
+function hasOwnText(el) { for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) return true; return false; }
+function isLeafText(el) {
+  if (!el.textContent.trim()) return false;
+  if (el.querySelector(HEAVY)) return false;
+  for (const d of el.querySelectorAll('*')) if (BLOCK.has(d.tagName)) return false;
+  return BLOCK.has(el.tagName) || /^(A|SPAN|B|STRONG|EM|SMALL|I|LABEL|SUMMARY|FIGCAPTION|TD|TH|DT|DD)$/.test(el.tagName) ? true : hasOwnText(el);
+}
+function mark(doc) {
+  let ce = 0, ci = 0;
+  (function walk(el) {
+    for (const c of [...el.children]) {
+      if (SKIP.has(c.tagName.toUpperCase())) continue;
+      if (c.tagName === 'IMG') { c.setAttribute('data-ci', ci++); continue; }
+      if (isLeafText(c)) { c.setAttribute('data-ce', ce++); continue; }
+      walk(c);
+    }
+  })(doc.body);
+  return { ce, ci };
+}
+
+/* ── Chargement d'une page ── */
+async function loadPage(file) {
+  $('#loader').style.display = 'flex'; status('Chargement…');
+  const j = await api(file);
+  const html = b64dText(j.content);
+  const src = new DOMParser().parseFromString(html, 'text/html');
+  const n = mark(src);
+  cur = { file, sha: j.sha, src, dirty: false, images: new Map() };
+  // aperçu : sans scripts, ressources servies par le site en ligne, animations d'apparition désactivées
+  const view = src.cloneNode(true);
+  view.querySelectorAll('script').forEach(s => s.remove());
+  const base = view.createElement('base'); base.href = location.origin + '/'; view.head.prepend(base);
+  const st = view.createElement('style');
+  st.textContent = `.reveal,.fade,[class*="reveal"],[class*="fade"]{opacity:1!important;transform:none!important;visibility:visible!important}
+    [data-ce]{outline:1px dashed transparent;outline-offset:3px;transition:outline-color .15s;cursor:text}
+    [data-ce]:hover{outline-color:rgba(217,160,80,.9)}
+    [data-ce]:focus{outline:2px solid #D9A050;background:rgba(217,191,157,.12)}
+    img[data-ci]{cursor:pointer;transition:filter .15s}
+    img[data-ci]:hover{filter:brightness(.82) saturate(1.1);outline:3px solid #D9A050;outline-offset:-3px}`;
+  view.head.appendChild(st);
+  frame.onload = () => wire(n);
+  frame.srcdoc = '<!DOCTYPE html>' + view.documentElement.outerHTML;
+}
+
+function wire(n) {
+  const d = frame.contentDocument;
+  d.querySelectorAll('[data-ce]').forEach(el => {
+    el.setAttribute('contenteditable', 'true'); el.spellcheck = true;
+    el.addEventListener('input', dirty);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); if (!/^H\d$/.test(el.tagName)) d.execCommand('insertLineBreak'); } });
+    el.addEventListener('paste', e => { e.preventDefault(); d.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain')); });
+  });
+  d.addEventListener('click', e => {
+    const img = e.target.closest('img[data-ci]');
+    if (img) { e.preventDefault(); e.stopPropagation(); pickImage(img); return; }
+    const a = e.target.closest('a'); if (a) e.preventDefault();          // pas de navigation dans l'aperçu
+  }, true);
+  d.addEventListener('submit', e => e.preventDefault(), true);
+  $('#loader').style.display = 'none';
+  status(`${n.ce} textes et ${n.ci} photos modifiables`);
+}
+function dirty() { if (!cur.dirty) { cur.dirty = true; $('#saveBtn').disabled = false; } status('Modifications non publiées', 'dirty'); }
+
+/* ── Remplacement d'une photo ── */
+function pickImage(img) {
+  const f = $('#file'); f.value = '';
+  f.onchange = async () => {
+    const file = f.files[0]; if (!file) return;
+    status('Préparation de la photo…');
+    const keepPng = /\.png($|\?)/i.test(img.getAttribute('src') || '') && file.type === 'image/png';
+    const blob = await shrink(file, keepPng);
+    const url = URL.createObjectURL(blob);
+    img.src = url; img.removeAttribute('srcset');
+    cur.images.set(img.getAttribute('data-ci'), { blob, ext: keepPng ? 'png' : 'jpg', name: (file.name.replace(/\.[^.]+$/, '') || 'photo') });
+    dirty();
+  };
+  f.click();
+}
+function shrink(file, png) {          // 2000 px maximum, JPEG 85 %
+  return new Promise((res, rej) => {
+    const im = new Image(); im.onload = () => {
+      const k = Math.min(1, 2000 / Math.max(im.width, im.height));
+      const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+      const g = c.getContext('2d'); if (!png) { g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); }
+      g.drawImage(im, 0, 0, c.width, c.height);
+      c.toBlob(b => b ? res(b) : rej(new Error('Image illisible')), png ? 'image/png' : 'image/jpeg', .85);
+    }; im.onerror = () => rej(new Error('Image illisible')); im.src = URL.createObjectURL(file);
+  });
+}
+const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'photo';
+
+/* ── Publication ── */
+$('#saveBtn').addEventListener('click', async () => {
+  if (!cur || !cur.dirty) return;
+  const btn = $('#saveBtn'); btn.disabled = true;
+  try {
+    const d = frame.contentDocument;
+    // 1. photos : chaque nouvelle photo devient un nouveau fichier (pas de cache périmé), seule cette page change
+    for (const [idx, im] of cur.images) {
+      status('Envoi des photos…');
+      const path = `images/modif-${Date.now().toString(36)}-${slug(im.name)}.${im.ext}`;
+      await api(path, { method: 'PUT', body: JSON.stringify({ message: `Photo ajoutée depuis l'espace administrateur (${cur.file})`, content: await blobToB64(im.blob), branch: CONFIG.branch }) });
+      const s = cur.src.querySelector(`img[data-ci="${idx}"]`); if (s) { s.setAttribute('src', path); s.removeAttribute('srcset'); }
+    }
+    // 2. textes : on recopie le contenu modifié dans le HTML d'origine (scripts et SEO intacts)
+    d.querySelectorAll('[data-ce]').forEach(el => {
+      const s = cur.src.querySelector(`[data-ce="${el.getAttribute('data-ce')}"]`); if (!s) return;
+      const c = el.cloneNode(true); c.removeAttribute('contenteditable');
+      c.querySelectorAll('[contenteditable]').forEach(x => x.removeAttribute('contenteditable'));
+      if (s.innerHTML !== c.innerHTML) s.innerHTML = c.innerHTML;
+    });
+    const out = cur.src.cloneNode(true);
+    out.querySelectorAll('[data-ce]').forEach(x => x.removeAttribute('data-ce'));
+    out.querySelectorAll('[data-ci]').forEach(x => x.removeAttribute('data-ci'));
+    const html = '<!DOCTYPE html>\n' + out.documentElement.outerHTML + '\n';
+    status('Publication…');
+    const r = await api(cur.file, { method: 'PUT', body: JSON.stringify({ message: `Modification de ${label(cur.file)} depuis l'espace administrateur`, content: b64eText(html), sha: cur.sha, branch: CONFIG.branch }) });
+    cur.sha = r.content.sha; cur.dirty = false; cur.images.clear();
+    status('Publié ✓ — en ligne dans 1 à 2 minutes', 'ok');
+  } catch (e) {
+    btn.disabled = false;
+    status(e.status === 409 ? 'La page a changé entre-temps : rechargez-la puis recommencez.' : ('Échec : ' + e.message), 'err');
+  }
+});
+$('#viewBtn').addEventListener('click', () => {
+  if (!cur) return; const p = cur.file === 'index.html' ? '/' : '/' + cur.file.replace(/\.html$/, '');
+  window.open(p + '?v=' + Date.now(), '_blank');
+});
+window.addEventListener('beforeunload', e => { if (cur && cur.dirty) { e.preventDefault(); e.returnValue = ''; } });
+</script>
+</body>
+</html>
