@@ -146,16 +146,17 @@ function isLeafText(el) {
   return BLOCK.has(el.tagName) || /^(A|SPAN|B|STRONG|EM|SMALL|I|LABEL|SUMMARY|FIGCAPTION|TD|TH|DT|DD)$/.test(el.tagName) ? true : hasOwnText(el);
 }
 function mark(doc) {
-  let ce = 0, ci = 0;
+  let ce = 0, ci = 0, cb = 0;
   (function walk(el) {
     for (const c of [...el.children]) {
       if (SKIP.has(c.tagName.toUpperCase())) continue;
       if (c.tagName === 'IMG') { c.setAttribute('data-ci', ci++); continue; }
+      if (/background(-image)?\s*:[^;]*url\(/i.test(c.getAttribute('style') || '')) c.setAttribute('data-cb', cb++);
       if (isLeafText(c)) { c.setAttribute('data-ce', ce++); continue; }
       walk(c);
     }
   })(doc.body);
-  return { ce, ci };
+  return { ce, ci: ci + cb };
 }
 
 /* ── Chargement d'une page ── */
@@ -176,7 +177,9 @@ async function loadPage(file) {
     [data-ce]:hover{outline-color:rgba(217,160,80,.9)}
     [data-ce]:focus{outline:2px solid #D9A050;background:rgba(217,191,157,.12)}
     img[data-ci]{cursor:pointer;transition:filter .15s}
-    img[data-ci]:hover{filter:brightness(.82) saturate(1.1);outline:3px solid #D9A050;outline-offset:-3px}`;
+    img[data-ci]:hover{filter:brightness(.82) saturate(1.1);outline:3px solid #D9A050;outline-offset:-3px}
+    .ve-badge{position:absolute;z-index:2147483000;background:#D9BF9D;color:#141418;border:0;border-radius:999px;padding:9px 15px;font:600 13px/1 -apple-system,Segoe UI,sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.45)}
+    .ve-badge:hover{background:#fff}`;
   view.head.appendChild(st);
   frame.onload = () => wire(n);
   frame.srcdoc = '<!DOCTYPE html>' + view.documentElement.outerHTML;
@@ -196,22 +199,35 @@ function wire(n) {
     const a = e.target.closest('a'); if (a) e.preventDefault();          // pas de navigation dans l'aperçu
   }, true);
   d.addEventListener('submit', e => e.preventDefault(), true);
+  const badges = [];
+  const covered = img => { const w = d.defaultView; const s = w.getComputedStyle(img), ps = img.parentElement ? w.getComputedStyle(img.parentElement) : s;
+    return s.position === 'absolute' || s.position === 'fixed' || ps.position === 'absolute' || !!img.closest('[class*="hero"],[class*="bg"],[class*="banner"]'); };
+  d.querySelectorAll('img[data-ci]').forEach(img => { if (covered(img)) badges.push({ el: img, txt: '📷 Changer la photo de fond', fn: () => pickImage(img) }); });
+  d.querySelectorAll('[data-cb]').forEach(el => badges.push({ el, txt: '📷 Changer la photo de fond', fn: () => pickImage(el, true) }));
+  badges.forEach(b => { const bt = d.createElement('button'); bt.type = 'button'; bt.className = 've-badge'; bt.textContent = b.txt;
+    bt.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); b.fn(); }, true); d.body.appendChild(bt); b.bt = bt; });
+  const place = () => badges.forEach(b => { const r = b.el.getBoundingClientRect(); const w = d.defaultView;
+    if (r.width < 60 || r.height < 40) { b.bt.style.display = 'none'; return; } b.bt.style.display = '';
+    b.bt.style.left = (r.left + w.scrollX + 16) + 'px'; b.bt.style.top = (r.top + w.scrollY + Math.max(16, Math.min(110, r.height * .18))) + 'px'; });
+  place(); [400, 1200, 2500, 5000].forEach(t => setTimeout(place, t)); d.defaultView.addEventListener('resize', place);
   $('#loader').style.display = 'none';
   status(`${n.ce} textes et ${n.ci} photos modifiables`);
 }
 function dirty() { if (!cur.dirty) { cur.dirty = true; $('#saveBtn').disabled = false; } status('Modifications non publiées', 'dirty'); }
 
 /* ── Remplacement d'une photo ── */
-function pickImage(img) {
+function pickImage(img, isBg) {
   const f = $('#file'); f.value = '';
   f.onchange = async () => {
     const file = f.files[0]; if (!file) return;
     status('Préparation de la photo…');
-    const keepPng = /\.png($|\?)/i.test(img.getAttribute('src') || '') && file.type === 'image/png';
+    const keepPng = !isBg && /\.png($|\?)/i.test(img.getAttribute('src') || '') && file.type === 'image/png';
     const blob = await shrink(file, keepPng);
     const url = URL.createObjectURL(blob);
-    img.src = url; img.removeAttribute('srcset');
-    cur.images.set(img.getAttribute('data-ci'), { blob, ext: keepPng ? 'png' : 'jpg', name: (file.name.replace(/\.[^.]+$/, '') || 'photo') });
+    if (isBg) img.style.backgroundImage = (img.style.backgroundImage || '').replace(/url\([^)]*\)(?!.*url\()/, `url("${url}")`) || `url("${url}")`;
+    else { img.src = url; img.removeAttribute('srcset'); }
+    const key = isBg ? 'b' + img.getAttribute('data-cb') : 'i' + img.getAttribute('data-ci');
+    cur.images.set(key, { blob, ext: keepPng ? 'png' : 'jpg', name: (file.name.replace(/\.[^.]+$/, '') || 'photo') });
     dirty();
   };
   f.click();
@@ -240,7 +256,10 @@ $('#saveBtn').addEventListener('click', async () => {
       status('Envoi des photos…');
       const path = `images/modif-${Date.now().toString(36)}-${slug(im.name)}.${im.ext}`;
       await api(path, { method: 'PUT', body: JSON.stringify({ message: `Photo ajoutée depuis l'espace administrateur (${cur.file})`, content: await blobToB64(im.blob), branch: CONFIG.branch }) });
-      const s = cur.src.querySelector(`img[data-ci="${idx}"]`); if (s) { s.setAttribute('src', path); s.removeAttribute('srcset'); }
+      if (idx[0] === 'b') { const s = cur.src.querySelector(`[data-cb="${idx.slice(1)}"]`);
+        if (s) { const st = s.getAttribute('style') || ''; const i = st.lastIndexOf('url('); const j = st.indexOf(')', i);
+          s.setAttribute('style', i >= 0 ? st.slice(0, i) + `url('${path}')` + st.slice(j + 1) : st + `;background-image:url('${path}')`); } }
+      else { const s = cur.src.querySelector(`img[data-ci="${idx.slice(1)}"]`); if (s) { s.setAttribute('src', path); s.removeAttribute('srcset'); } }
     }
     // 2. textes : on recopie le contenu modifié dans le HTML d'origine (scripts et SEO intacts)
     d.querySelectorAll('[data-ce]').forEach(el => {
@@ -252,6 +271,7 @@ $('#saveBtn').addEventListener('click', async () => {
     const out = cur.src.cloneNode(true);
     out.querySelectorAll('[data-ce]').forEach(x => x.removeAttribute('data-ce'));
     out.querySelectorAll('[data-ci]').forEach(x => x.removeAttribute('data-ci'));
+    out.querySelectorAll('[data-cb]').forEach(x => x.removeAttribute('data-cb'));
     const html = '<!DOCTYPE html>\n' + out.documentElement.outerHTML + '\n';
     status('Publication…');
     const r = await api(cur.file, { method: 'PUT', body: JSON.stringify({ message: `Modification de ${label(cur.file)} depuis l'espace administrateur`, content: b64eText(html), sha: cur.sha, branch: CONFIG.branch }) });
