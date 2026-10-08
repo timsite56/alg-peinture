@@ -291,17 +291,6 @@ footer a:hover{color:var(--sand)}
 }
 
 /* ── Zone de chalandise Grand Ouest + encart « plus loin sur demande » (07/10/2026) ── */
-.map-frame #zoneMap{position:absolute;inset:0;background:#1a1a1f}
-.map-frame .leaflet-container{font-family:var(--sans);background:#1a1a1f}
-.map-legend{position:absolute;left:14px;bottom:24px;z-index:500;background:rgba(28,27,33,.88);border:1px solid var(--line);padding:12px 14px;font-size:.74rem;line-height:1.9;color:#E9E2D8;backdrop-filter:blur(4px)}
-.map-legend span{display:flex;align-items:center;gap:9px}
-.map-legend i{width:14px;height:14px;display:inline-block;border-radius:3px}
-.map-legend .lg-1 i{background:rgba(217,191,157,.55);border:1px solid #D9BF9D}
-.map-legend .lg-2 i{background:rgba(217,191,157,.14);border:1px dashed #C6A67F}
-.map-legend .lg-3 i{border-radius:50%;background:#D9BF9D;box-shadow:0 0 0 4px rgba(217,191,157,.25)}
-.leaflet-tooltip.zone-label{background:none;border:0;box-shadow:none;padding:0 2px;color:#E9E2D8;font-size:.72rem;letter-spacing:.06em;font-weight:500;text-shadow:0 1px 3px #000}
-.leaflet-tooltip.zone-label.siege{color:#1C1B21;background:#D9BF9D;padding:3px 8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.62rem;text-shadow:none}
-.leaflet-tooltip.zone-label::before{display:none}
 .further{margin-top:28px;padding:22px 24px;border:1px solid var(--sand);background:linear-gradient(135deg,rgba(217,191,157,.16),rgba(217,191,157,.04));position:relative}
 .further::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:4px;background:var(--sand)}
 .further b{display:block;font-family:var(--serif);font-weight:500;font-size:1.35rem;color:var(--sand);margin-bottom:6px}
@@ -311,3 +300,30 @@ footer a:hover{color:var(--sand)}
 .further.light{background:linear-gradient(135deg,rgba(198,166,127,.18),rgba(198,166,127,.05));border-color:var(--sand-2)}
 .further.light::before{background:var(--sand-2)}
 .further.light b{color:var(--ink)}.further.light p{color:#5f5a54}.further.light .f-tel{color:var(--ink);border-color:var(--sand-2)}
+
+/* ── Carte de France SVG (08/10/2026) ── */
+.map-frame.fr{aspect-ratio:auto;border:0;overflow:visible;background:none}
+.fr-map{width:100%;height:auto;display:block;font-family:var(--sans)}
+.fr-map .deps path{stroke-width:1.1;stroke-linejoin:round;transition:fill .3s ease}
+.fr-map .d-fr{fill:#2A2930;stroke:rgba(233,226,216,.13)}
+.fr-map .d-fr:hover{fill:#33323a}
+.fr-map .d-go{fill:rgba(217,191,157,.24);stroke:rgba(217,191,157,.55)}
+.fr-map .d-go:hover{fill:rgba(217,191,157,.36)}
+.fr-map .d-core{fill:rgba(217,191,157,.62);stroke:#E9D6BA}
+.fr-map .d-core:hover{fill:rgba(217,191,157,.75)}
+.fr-map .cities circle{fill:#F3ECE2}
+.fr-map .cities text{font-size:24px;font-weight:500;fill:#E9E2D8;letter-spacing:.02em;paint-order:stroke;stroke:#1C1B21;stroke-width:6px;stroke-linejoin:round}
+.fr-map .cities .far circle{fill:#8f877d}.fr-map .cities .far text{fill:#8f877d;font-size:21px}
+.fr-map .far-txt{font-family:var(--serif);font-size:44px;fill:rgba(217,191,157,.55)}
+.fr-map .siege{fill:#D9BF9D;stroke:#1C1B21;stroke-width:3}
+.fr-map .pulse{fill:none;stroke:#D9BF9D;stroke-width:2;transform-origin:center;transform-box:fill-box;animation:frpulse 2.6s ease-out infinite}
+@keyframes frpulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+.fr-map .siege-tag rect{fill:#D9BF9D}
+.fr-map .siege-tag text{font-size:16px;font-weight:600;letter-spacing:.08em;fill:#1C1B21}
+.fr-legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;font-size:.78rem;color:#CFC8BF;letter-spacing:.04em}
+.fr-legend span{display:inline-flex;align-items:center;gap:9px}
+.fr-legend i{width:16px;height:12px;border-radius:2px;display:inline-block}
+.fr-legend .l1 i{background:rgba(217,191,157,.62);border:1px solid #E9D6BA}
+.fr-legend .l2 i{background:rgba(217,191,157,.24);border:1px solid rgba(217,191,157,.55)}
+.fr-legend .l3 i{background:#2A2930;border:1px solid rgba(233,226,216,.25)}
+@media (prefers-reduced-motion:reduce){.fr-map .pulse{animation:none;opacity:0}}
