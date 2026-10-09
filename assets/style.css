@@ -329,3 +329,55 @@ footer a:hover{color:var(--sand)}
 .fr-legend .l2 i{background:rgba(217,191,157,.24);border:1px solid rgba(217,191,157,.55)}
 .fr-legend .l3 i{background:#2A2930;border:1px solid rgba(233,226,216,.25)}
 @media (prefers-reduced-motion:reduce){.fr-map .pulse{animation:none;opacity:0}}
+
+/* ── Partenaires (09/10/2026) ── */
+.partners{background:var(--paper);padding:clamp(70px,9vw,110px) 0;border-bottom:1px solid rgba(28,27,33,.08)}
+.partners-head{text-align:center;max-width:640px;margin:0 auto clamp(36px,5vw,56px)}
+.partners-head .eyebrow{justify-content:center}
+.partners-head .eyebrow::after{content:"";width:36px;height:1px;background:currentColor}
+.partners-head .lead{color:#55525A}
+.partners-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.partner{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(28,27,33,.08);transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease)}
+.partner:hover{border-color:var(--sand-2);transform:translateY(-4px);box-shadow:0 18px 40px rgba(28,27,33,.08)}
+.partner-logo{flex:1;display:grid;place-items:center;aspect-ratio:16/10;padding:22px}
+.partner-logo img{max-width:78%;max-height:58px;width:auto;height:auto;object-fit:contain}
+.partner.is-round .partner-logo img{max-height:104px}
+.partner-name{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 10px;border-top:1px solid rgba(28,27,33,.06);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--taupe);transition:color .3s}
+.partner-name svg{width:12px;height:12px}
+.partner:hover .partner-name{color:var(--ink)}
+@media (max-width:860px){.partners-grid{grid-template-columns:repeat(2,1fr);gap:12px}.partner-logo{padding:16px}.partner-logo img{max-height:46px}.partner.is-round .partner-logo img{max-height:84px}}
+
+/* ── Avis clients (09/10/2026) ── */
+.avis-band{background:var(--paper)}
+.avis-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(36px,6vw,90px);align-items:center}
+.avis-band .lead{color:#55525A;max-width:560px}
+.avis-cta{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px;margin-top:34px}
+.btn-ink{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.btn-ink:hover{background:transparent;color:var(--ink)}
+.btn-ink svg,.avis-link svg{width:16px;height:16px}
+.avis-link{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--sand-2);padding-bottom:4px}
+.avis-link:hover{color:var(--sand-2)}
+.avis-qr{background:#fff;border:1px solid rgba(28,27,33,.08);padding:30px 28px 26px;text-align:center;max-width:300px;justify-self:center}
+.avis-qr .stars{display:block;color:var(--sand-2);letter-spacing:.3em;font-size:1rem;margin-bottom:14px}
+.avis-qr img{width:200px;height:200px;margin:0 auto}
+.avis-qr p{margin-top:14px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--taupe);line-height:1.8}
+@media (max-width:860px){.avis-grid{grid-template-columns:1fr}.avis-qr{justify-self:start}}
+@media (max-width:560px){.avis-qr{display:none}}
+
+/* ── Pied de page légal + page mentions (09/10/2026) ── */
+.foot-legal a{text-decoration:underline;text-underline-offset:3px}
+.foot-legal a:hover{color:var(--sand)}
+.legal-hero{min-height:auto;padding:160px 0 80px}
+.legal-page h2{font-size:clamp(1.5rem,2.6vw,2rem);margin:56px 0 18px}
+.legal-page h2:first-of-type{margin-top:0}
+.legal-page h3{font-family:var(--sans);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-2);margin:30px 0 10px;font-weight:600}
+.legal-page .prose p,.legal-page .prose li{color:#55525A}
+.legal-page .prose ul{margin:0 0 18px 1.1em;list-style:disc}
+.legal-page .prose li{margin-bottom:6px}
+.legal-card{background:var(--paper);border:1px solid rgba(28,27,33,.08);padding:26px 30px;margin:0 0 18px}
+.legal-card dl{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:10px 22px;margin:0}
+.legal-card dt{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe);padding-top:3px}
+.legal-card dd{margin:0;color:var(--ink)}
+.legal-toc{display:flex;flex-wrap:wrap;gap:10px 26px;margin:0 0 50px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
+.legal-toc a{border-bottom:1px solid var(--sand-2);padding-bottom:3px}
+@media (max-width:600px){.legal-card{padding:20px}.legal-card dl{grid-template-columns:1fr;gap:2px}.legal-card dd{margin-bottom:12px}}
