@@ -1,3 +1,4 @@
+var EN=document.documentElement.lang==='en';
 (function(){
   var nav=document.getElementById('nav'),burger=document.getElementById('burger');
   function onScroll(){nav.classList.toggle('scrolled',window.scrollY>40)}
@@ -34,11 +35,11 @@
   var form=document.getElementById('devisForm');
   if(form)form.addEventListener('submit',function(e){
     e.preventDefault();
-    var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Envoi…';
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent=EN?'Sending…':'Envoi…';
     fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
       .then(function(r){return r.json()})
       .then(function(d){if(d.success){document.getElementById('formFields').style.display='none';document.getElementById('formOk').style.display='block'}else{throw 0}})
-      .catch(function(){btn.disabled=false;btn.textContent='Envoyer ma demande';alert("L'envoi a échoué. Appelez-nous au 07 68 78 92 58.")});
+      .catch(function(){btn.disabled=false;btn.textContent=EN?'Send my request':'Envoyer ma demande';alert(EN?"Sending failed. Please call us on +33 7 68 78 92 58.":"L'envoi a échoué. Appelez-nous au 07 68 78 92 58.")});
   });
   var ps=document.getElementById('f-presta'),pre=document.body.getAttribute('data-presta');if(ps&&pre)ps.value=pre;
 })();
