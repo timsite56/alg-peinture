@@ -55,7 +55,7 @@
 <main id="top">
 
 <section class="hero">
-  <div class="hero-bg"><img src="images/hero.jpg?v=3" alt="Artisan peintre au travail sur une façade en pierre" fetchpriority="high"></div>
+  <div class="hero-bg"><picture style="display:block;width:100%;height:100%"><source media="(max-aspect-ratio: 3/5)" srcset="images/hero-tel.jpg"><img src="images/hero.jpg?v=3" alt="Artisan peintre au travail sur une façade en pierre" fetchpriority="high"></picture></div>
   <svg class="arcs" viewBox="0 0 400 210" aria-hidden="true"><use href="#arcs"/></svg>
   <div class="wrap">
     <p class="eyebrow reveal">Artisan peintre · Saint-Pierre-Montlimart &amp; Grand Ouest</p>
@@ -330,7 +330,7 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo en grand">
   <button class="lb-btn lb-close" aria-label="Fermer">✕</button>
   <button class="lb-btn lb-prev" aria-label="Précédente">‹</button>
-  <img alt="">
+  <img loading="lazy" decoding="async" alt="">
   <button class="lb-btn lb-next" aria-label="Suivante">›</button>
 </div>
 
